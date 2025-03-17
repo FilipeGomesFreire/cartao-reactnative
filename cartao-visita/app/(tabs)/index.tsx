@@ -1,74 +1,169 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { Image, StyleSheet, Text, View, Linking, ImageBackground } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { Appearance } from 'react-native';
 
 export default function HomeScreen() {
+  Appearance.setColorScheme('light'); // Força o tema claro
+
+  const handlePress = (url: string) => {
+    Linking.openURL(url).catch(err => console.error("Erro ao abrir o link:", err));
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
+    <ImageBackground
+      source={{ uri: 'https://i.imgur.com/ydvdjvB.png' }} // Imagem de fundo online
+      style={styles.backgroundImage}
+      resizeMode="cover" // Ajusta a imagem para cobrir todo o espaço
+    >
+      <View style={styles.container}>
+        {/* Imagem de perfil */}
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          source={{ uri: 'https://i.imgur.com/DgjWkR3.jpeg' }} // Substitua pelo link da sua foto
+          style={styles.profileImage}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
+
+        {/* Nome e cargo */}
+        <ThemedText type="title" style={styles.name}>
+          FILIPE GOMES FREIRE LEITÃO
         </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
+        <ThemedText type="title" style={styles.curso}>
+          CURSO
         </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+        <ThemedText type="title" style={styles.nomeCurso}>
+          SISTEMAS PARA INTERNET
         </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        <ThemedText type="subtitle" style={styles.jobTitle}>
+          Desenvolvedor Mobile, Web e Backend
+        </ThemedText>
+
+        {/* Informações de contato */}
+        <ThemedView style={styles.contactInfo}>
+          <ThemedText style={styles.contactText}>Email: filipegomesfreire@gmail.com</ThemedText>
+          <ThemedText style={styles.contactText}>Telefone: (81) 99626-5245</ThemedText>
+        </ThemedView>
+
+        {/* Links de redes sociais */}
+        <ThemedView style={styles.socialLinks}>
+          <Text
+            style={styles.link}
+            onPress={() => handlePress('https://www.linkedin.com/in/filipegomesfreire/')}
+          >
+            LinkedIn
+          </Text>
+          <Text
+            style={styles.link}
+            onPress={() => handlePress('https://github.com/filipetrap')}
+          >
+            GitHub
+          </Text>
+          <Text
+            style={styles.link}
+            onPress={() => handlePress('https://instagram.com/filipegomesfreire')}
+          >
+            Instagram
+          </Text>
+        </ThemedView>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  container: {
+    flex: 1,
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'center',
+    padding: 20,
+    transform: [{ rotate: '-90deg' }], 
+    // backgroundColor: 'rgba(255, 255, 255, 0.7)', // Fundo semi-transparente para melhorar a legibilidade
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  profileImage: {
+    width: 190,
+    height: 190,
+    borderRadius: 10,
+    marginBottom: 5,
+    // transform: [{ rotate: '-90deg' }], 
+    position: 'absolute', 
+    top: 200, 
+    left: 335, 
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+    color: '#000', 
+    // transform: [{ rotate: '-90deg' }], 
+    position: 'absolute', 
+    top: 320, 
+    left: -140, 
+  },
+  
+  curso: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+    color: '#493034', 
+    // transform: [{ rotate: '-90deg' }], 
+    position: 'absolute', 
+    top: 360, 
+    left: -140, 
+    
+  },
+  nomeCurso: {
+    fontSize: 24,
+    fontWeight: 'light',
+    marginBottom: 10,
+    textAlign: 'center',
+    color: '#000', 
+    // transform: [{ rotate: '-90deg' }], 
+    position: 'absolute', 
+    top: 380, 
+    left: -140, 
+  },
+  jobTitle: {
+    fontSize: 18,
+    color: '#555',
+    marginBottom: 20,
+    textAlign: 'center',
+    // transform: [{ rotate: '-90deg' }], 
+    position: 'absolute', 
+    top: 420, 
+    left: -140,  
+  },
+  contactInfo: {
+    marginBottom: 20,
+    alignItems: 'center',
+    // transform: [{ rotate: '-90deg' }], 
+    position: 'absolute', 
+    top: 500, 
+    left: 250, 
+  },
+  contactText: {
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 5,
+    
+  },
+  socialLinks: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '80%',
+    // transform: [{ rotate: '-90deg' }], 
+    position: 'absolute', 
+    top: 520, 
+    left: -120, 
+  },
+  link: {
+    fontSize: 16,
+    color: '#0077b5', // Cor do LinkedIn
+    textDecorationLine: 'underline',
   },
 });
